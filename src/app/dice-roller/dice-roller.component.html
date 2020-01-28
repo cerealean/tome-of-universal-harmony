@@ -1,0 +1,47 @@
+<div class="box">
+    <div class="field">
+        <label class="label">Number of Dice</label>
+        <div class="control">
+            <input type="number" class="input is-info" min="1" [(ngModel)]="numberOfDice" />
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">Number of Sides</label>
+        <div class="control">
+            <input type="number" class="input is-info" min="1" [(ngModel)]="numberOfSides" />
+        </div>
+    </div>
+
+    <div class="field is-grouped">
+        <div class="control">
+            <button class="button is-link" (click)="rollDie()">Roll</button>
+        </div>
+    </div>
+
+    <div class="container box">
+        <div class="tile is-ancestor">
+            <div class="tile is-parent" *ngFor="let roll of diceRolls; let last = last;">
+                <div class="tile is-ancestor">
+                    <div class="tile box">
+                        <p class="title">{{roll}}</p>
+                    </div>
+                    <div class="tile box" *ngIf="!last">
+                        <p class="title">+</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tile is-parent" *ngIf="diceRolls">
+                <div class="tile is-ancestor">
+                    <div class="tile box">
+                        <p class="title">=</p>
+                    </div>
+                    <div class="tile box">
+                    <p class="title">{{getTotal()}}</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
