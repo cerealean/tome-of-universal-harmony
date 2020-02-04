@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { LandingComponent } from './landing/landing.component';
 import { DiceRollerComponent } from './dice-roller/dice-roller.component';
+import { CompendiumEditorComponent } from './compendium-editor/compendium-editor.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     LandingComponent,
-    DiceRollerComponent
+    DiceRollerComponent,
+    CompendiumEditorComponent
   ],
   imports: [
     BrowserModule,
