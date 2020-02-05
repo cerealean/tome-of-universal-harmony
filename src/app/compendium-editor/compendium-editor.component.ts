@@ -45,30 +45,6 @@ export class CompendiumEditorComponent implements OnInit {
     }).finally(() => console.log(this.items));
   }
 
-  public base64Files: string[] = [];
-  private fileReader = new FileReader();
-
-  public onChange(event: Event) {
-    if (event.target['files']) {
-      console.log(event.target['files']);
-      this.readFiles(event.target['files'], 0);
-    }
-  };
-
-  private readFiles(files: any[], index: number) {
-    let file = files[index];
-    this.fileReader.onload = () => {
-      this.base64Files.push(this.fileReader.result as string);
-      if (files[index + 1]) {
-        this.readFiles(files, index + 1);
-      } else {
-        console.log('loaded all files');
-      }
-    };
-    this.fileReader.readAsDataURL(file);
-    console.log(this.base64Files);
-  }
-
 }
 
 interface Blob {
