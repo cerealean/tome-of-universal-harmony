@@ -9,15 +9,10 @@ import { Item, ItemTypes, DamageTypes } from './models/item';
 export class CompendiumEditorComponent implements OnInit {
   public itemTypes = ItemTypes;
 
-  public items: Item[] = [
-    <any>{
-      name: "Rawr",
-      magic: true,
-      weight: 5,
-      type: ItemTypes.Ammunition,
-      dmgType: DamageTypes.Piercing
-    }
-  ];
+  public items: Item[] = [];
+  public page = 1;
+  public itemsPerPage = 10;
+  public isLoading = false;
 
   constructor() { }
 
@@ -25,14 +20,14 @@ export class CompendiumEditorComponent implements OnInit {
   }
 
   loadFile(event: Event) {
+    this.isLoading = true;
     this.items = [];
     const file = event.target['files'][0] as Blob;
-    console.log(event.target['files'], file);
     file.text().then(fileText => {
       if(!fileText) return;
       const stuff = new DOMParser().parseFromString(fileText, "application/xml");
       stuff.getRootNode().childNodes[0].childNodes.forEach((itemNode, index) => {
-        if(index >= 10 || itemNode.nodeName == "#text") {
+        if(itemNode.nodeName == "#text") {
           return;
         }
         const newItem = new Item();
@@ -42,7 +37,17 @@ export class CompendiumEditorComponent implements OnInit {
         });
         this.items.push(newItem);
       });
-    }).finally(() => console.log(this.items));
+    }).finally(() => {
+      this.isLoading = false;
+    });
+  }
+
+  nextPage() {
+    this.page++;
+  }
+
+  previousPage() {
+    this.page--;
   }
 
 }

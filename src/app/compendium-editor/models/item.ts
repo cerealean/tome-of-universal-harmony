@@ -1,7 +1,13 @@
 export class Item {
     name: string;
     type: ItemTypes;
-    magic: number;
+    private isMagic = false;
+    get magic() {
+        return Number(this.isMagic);
+    }
+    set magic(value: any) {
+        this.isMagic = value && value != "0" && value != 0;
+    }
     weight: number;
     value: number;
     detail: string;
