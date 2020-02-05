@@ -1,33 +1,128 @@
-<article class="media">
-    <figure class="media-left">
-        <p class="image is-64x64">
-            <img src="https://bulma.io/images/placeholders/128x128.png">
-        </p>
-    </figure>
-    <div class="media-content">
-        <div class="content">
-            <p>
-                <strong>John Smith</strong> <small>@johnsmith</small> <small>31m</small>
-                <br>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor
-                vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.
+<div class="level">
+    <input type="file" (change)="loadFile($event)" />
+</div>
+
+<div class="box" *ngFor="let item of items">
+    <article class="media">
+        <figure class="media-left">
+            <p class="image is-64x64">
+                <img src="https://bulma.io/images/placeholders/128x128.png">
             </p>
-        </div>
-        <nav class="level is-mobile">
-            <div class="level-left">
-                <a class="level-item">
-                    <span class="icon is-small"><i class="fas fa-reply"></i></span>
-                </a>
-                <a class="level-item">
-                    <span class="icon is-small"><i class="fas fa-retweet"></i></span>
-                </a>
-                <a class="level-item">
-                    <span class="icon is-small"><i class="fas fa-heart"></i></span>
-                </a>
+        </figure>
+        <div class="media-content">
+            <div class="content">
+
+                <div class="columns">
+
+                    <!--Left Column-->
+                    <div class="column">
+
+                        <!--Name-->
+                        <div class="field is-horizontal">
+                            <div class="field-label is-normal">
+                                <label class="label">Name</label>
+                            </div>
+                            <div class="field-body">
+                                <div class="field">
+                                    <p class="control is-expanded has-icons-left">
+                                        <input class="input" type="text" placeholder="Name" [(ngModel)]="item.name">
+                                        <span class="icon is-small is-left">
+                                            <i class="fas fa-user"></i>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Weight-->
+                        <div class="field is-horizontal">
+                            <div class="field-label is-normal">
+                                <label class="label">Weight</label>
+                            </div>
+                            <div class="field-body">
+                                <div class="field">
+                                    <p class="control is-expanded has-icons-left">
+                                        <input class="input" type="number" placeholder="Weight" min="0" step="1"
+                                            [(ngModel)]="item.weight">
+                                        <span class="icon is-small is-left">
+                                            <i class="fas fa-user"></i>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!--Right Column-->
+                    <div class="column">
+
+                        <!--Type-->
+                        <div class="field is-horizontal">
+                            <div class="field-label is-normal">
+                                <label class="label">Type</label>
+                            </div>
+                            <div class="field-body">
+                                <div class="field">
+                                    <div class="control is-expanded">
+                                        <div class="select is-fullwidth">
+                                            <select [(ngModel)]="item.type">
+                                                <option [value]="itemTypes.AdventuringGear">Adventuring Gear</option>
+                                                <option [value]="itemTypes.Ammunition">Ammunition</option>
+                                                <option [value]="itemTypes.Currency">Currency</option>
+                                                <option [value]="itemTypes.HeavyArmor">Heavy Armor</option>
+                                                <option [value]="itemTypes.MediumArmor">Medium Armor</option>
+                                                <option [value]="itemTypes.LightArmor">Light Armor</option>
+                                                <option [value]="itemTypes.MeleeWeapon">Melee Weapon</option>
+                                                <option [value]="itemTypes.RangedWeapon">Ranged Weapon</option>
+                                                <option [value]="itemTypes.WonderousItem">Wonderous Item</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Is Magic-->
+                        <div class="field is-horizontal">
+                            <div class="field-label is-normal">
+                                <label class="label">Is Magic?</label>
+                            </div>
+                            <div class="field-body">
+                                <div class="field">
+                                    <div class="control is-expanded">
+                                        <div class="select is-fullwidth">
+                                            <select [(ngModel)]="item.magic">
+                                                <option [value]="true">Yes</option>
+                                                <option [value]="false">No</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
-        </nav>
-    </div>
-    <div class="media-right">
-        <button class="delete"></button>
-    </div>
-</article>
+            <!-- <nav class="level is-mobile">
+                <div class="level-left">
+                    <a class="level-item">
+                        <span class="icon is-small"><i class="fas fa-reply"></i></span>
+                    </a>
+                    <a class="level-item">
+                        <span class="icon is-small"><i class="fas fa-retweet"></i></span>
+                    </a>
+                    <a class="level-item">
+                        <span class="icon is-small"><i class="fas fa-heart"></i></span>
+                    </a>
+                </div>
+            </nav> -->
+        </div>
+        <div class="media-right">
+            <button class="delete"></button>
+        </div>
+    </article>
+</div>
