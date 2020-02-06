@@ -8,7 +8,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { LandingComponent } from './landing/landing.component';
 import { DiceRollerComponent } from './dice-roller/dice-roller.component';
 import { CompendiumEditorComponent } from './compendium-editor/compendium-editor.component';
-import { NgxPaginationModule } from 'ngx-pagination';
+import { NgxPaginationModule, PaginatePipe, PaginationControlsComponent } from 'ngx-pagination';
 
 @NgModule({
   declarations: [

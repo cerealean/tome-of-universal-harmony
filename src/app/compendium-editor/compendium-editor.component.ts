@@ -17,6 +17,12 @@ export class CompendiumEditorComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    [...Array(30).keys()].map(num => {
+      const item = new Item();
+      item.name = num.toString();
+      item.weight = Math.floor(Math.random() * num);
+      this.items.push(item);
+    });
   }
 
   loadFile(event: Event) {
@@ -42,12 +48,8 @@ export class CompendiumEditorComponent implements OnInit {
     });
   }
 
-  nextPage() {
-    this.page++;
-  }
-
-  previousPage() {
-    this.page--;
+  pageChange(pageNumber) {
+    this.page = pageNumber;
   }
 
 }
