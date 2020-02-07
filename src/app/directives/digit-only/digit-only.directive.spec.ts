@@ -2,11 +2,6 @@ import { DigitOnlyDirective } from './digit-only.directive';
 import { allowedKeys } from './allowed-keys';
 
 describe('DigitOnlyDirective', () => {
-  it('should create an instance', () => {
-    const directive = new DigitOnlyDirective();
-    expect(directive).toBeTruthy();
-  });
-
   describe('On Keydown', () => {
     let directive: DigitOnlyDirective;
 
