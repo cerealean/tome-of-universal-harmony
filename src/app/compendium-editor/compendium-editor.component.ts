@@ -46,7 +46,7 @@ export class CompendiumEditorComponent implements OnInit {
     });
   }
 
-  pageChange(pageNumber) {
+  pageChange(pageNumber: number) {
     this.page = pageNumber;
   }
 
