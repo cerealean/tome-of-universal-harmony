@@ -8,7 +8,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { LandingComponent } from './landing/landing.component';
 import { DiceRollerComponent } from './dice-roller/dice-roller.component';
 import { CompendiumEditorComponent } from './compendium-editor/compendium-editor.component';
-import { NgxPaginationModule, PaginatePipe, PaginationControlsComponent } from 'ngx-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { DigitOnlyDirective } from './directives/digit-only/digit-only.directive';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { NgxPaginationModule, PaginatePipe, PaginationControlsComponent } from '
     NavbarComponent,
     LandingComponent,
     DiceRollerComponent,
-    CompendiumEditorComponent
+    CompendiumEditorComponent,
+    DigitOnlyDirective
   ],
   imports: [
     BrowserModule,

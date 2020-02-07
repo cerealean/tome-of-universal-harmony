@@ -1,5 +1,6 @@
 <div class="level">
-    <input type="file" (change)="loadFile($event)" />
+    <input type="file" (change)="loadFile($event)" accept=".xml" />
+    <input type="number" DigitOnly class="input is-narrow" [(ngModel)]="itemsPerPage" placeholder="Items Per Page" min="1" step="1" />
 </div>
 
 <div *ngIf="!isLoading">
@@ -128,9 +129,8 @@
             </div>
         </article>
     </div>
-    <div *ngIf="items.length != 0">
-        <pagination-controls (pageChange)="pageChange($event)" directionLinks="true" autoHide="true" responsive="true"
-            screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
-            screenReaderCurrentLabel="You're on page"></pagination-controls>
-    </div>
+    <pagination-controls class="pagination-controls" [maxSize]="itemsPerPage" (pageChange)="pageChange($event)"
+        directionLinks="true" autoHide="true" responsive="true" screenReaderPaginationLabel="Pagination"
+        screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+    </pagination-controls>
 </div>

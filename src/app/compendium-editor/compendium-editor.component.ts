@@ -28,17 +28,15 @@ export class CompendiumEditorComponent implements OnInit {
   loadFile(event: Event) {
     this.isLoading = true;
     this.items = [];
-    const file = event.target['files'][0] as Blob;
+    const file = (event.target as HTMLInputElement).files[0] as unknown as Blob;
     file.text().then(fileText => {
-      if(!fileText) return;
-      const stuff = new DOMParser().parseFromString(fileText, "application/xml");
-      stuff.getRootNode().childNodes[0].childNodes.forEach((itemNode, index) => {
-        if(itemNode.nodeName == "#text") {
-          return;
-        }
+      if (!fileText) { return; }
+      const stuff = new DOMParser().parseFromString(fileText, 'application/xml');
+      stuff.getRootNode().childNodes[0].childNodes.forEach((itemNode) => {
+        if (itemNode.nodeName === '#text') { return; }
         const newItem = new Item();
         itemNode.childNodes.forEach(itemAttrsNode => {
-          if(itemAttrsNode.nodeName == "#text") return;
+          if (itemAttrsNode.nodeName === '#text') { return; }
           newItem[itemAttrsNode.nodeName] = itemAttrsNode.textContent;
         });
         this.items.push(newItem);
