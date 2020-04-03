@@ -26,3 +26,10 @@ $input-color: black;
 @import "../node_modules/bulma/sass/form/input-textarea.sass";
 
 @import './assets/cyborg-theme/overrides';
+
+// Custom below
+
+.navbar {
+    border-left: 0;
+    border-right: 0;
+}

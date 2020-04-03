@@ -17,31 +17,20 @@
             <button class="button is-link" (click)="rollDie()">Roll</button>
         </div>
     </div>
+    <hr />
 
-    <div class="container box">
-        <div class="tile is-ancestor">
-            <div class="tile is-parent" *ngFor="let roll of diceRolls; let last = last;">
-                <div class="tile is-ancestor">
-                    <div class="tile box">
-                        <p class="title">{{roll}}</p>
-                    </div>
-                    <div class="tile box" *ngIf="!last">
-                        <p class="title">+</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="tile is-parent" *ngIf="diceRolls">
-                <div class="tile is-ancestor">
-                    <div class="tile box">
-                        <p class="title">=</p>
-                    </div>
-                    <div class="tile box">
-                    <p class="title">{{getTotal()}}</p>
-                    </div>
-                </div>
-            </div>
+    <section class="dice-wrapper">
+        
+        <app-20-sided-dice [numberOfDice]="numberOfDice" [rollClicked]="rollClicked$"></app-20-sided-dice>
 
-        </div>
-    </div>
+        <!-- <app-dice-list [numberOfSides]="numberOfSides" [numberOfDice]="numberOfDice" [rollClicked]="rollClicked$" (afterRollEvent)="afterRoll($event)"></app-dice-list> -->
+        <!-- <div class="dice">
+            <ol class="die-list" *ngFor="let dieNumber of getRange(numberOfDice)"
+                [class.even-roll]="(dieNumber % 2) === 0" [class.odd-roll]="(dieNumber % 2) !== 0">
+                <li class="die-item" *ngFor="let dieItemNum of getRange(numberOfSides)" [attr.data-side]="dieItemNum">
+                    <span class="dot" *ngFor="let dotNum of getRange(dieItemNum)"></span>
+                </li>
+            </ol>
+        </div> -->
+    </section>
 </div>

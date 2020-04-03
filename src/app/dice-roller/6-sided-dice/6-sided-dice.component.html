@@ -1,0 +1,12 @@
+<section class="dice-wrapper">
+    <div class="dice" style="margin: 0;
+    padding: 0;
+    vertical-align: baseline;">
+        <ol class="die-list" *ngFor="let dieNumber of numberOfDiceRange" [class.even-roll]="(dieNumber % 2) === 0"
+            [class.odd-roll]="(dieNumber % 2) !== 0" >
+            <li class="die-item" *ngFor="let dieItemNum of numberOfSidesRange" [attr.data-side]="dieItemNum" >
+                <span class="dot" *ngFor="let dotNum of getRange(dieItemNum)"></span>
+            </li>
+        </ol>
+    </div>
+</section>
