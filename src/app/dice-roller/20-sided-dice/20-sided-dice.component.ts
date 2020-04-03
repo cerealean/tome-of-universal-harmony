@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Input, AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input, AfterViewInit, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import { range } from 'src/app/helpers/number-helpers';
 import { Observable, Subscription } from 'rxjs';
 
@@ -7,7 +7,7 @@ import { Observable, Subscription } from 'rxjs';
   templateUrl: './20-sided-dice.component.html',
   styleUrls: ['./20-sided-dice.component.scss']
 })
-export class TwentySidedDiceComponent implements OnInit, AfterViewInit, OnChanges {
+export class TwentySidedDiceComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
 
   @ViewChild('die') $die: ElementRef<HTMLDivElement>;
 
@@ -27,6 +27,10 @@ export class TwentySidedDiceComponent implements OnInit, AfterViewInit, OnChange
         this.rollDice(die);
       });
     });
+  }
+
+  ngOnDestroy() {
+    this.rollClicked$.unsubscribe();
   }
 
   ngAfterViewInit() {
