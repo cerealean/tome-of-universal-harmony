@@ -82,13 +82,4 @@ export class TwentySidedDiceComponent implements OnInit, AfterViewInit, OnChange
       ? this.getRandomIntInclusive(min, max)
       : min + (byteArray[0] % range);
   }
-
-
-  // private shuffleArray(array: string | any[]) {
-  //   for (let i = array.length - 1; i > 0; i--) {
-  //     const j = Math.floor(Math.random() * (i + 1));
-  //     [array[i], array[j]] = [array[j], array[i]];
-  //   }
-  // }
-
 }
