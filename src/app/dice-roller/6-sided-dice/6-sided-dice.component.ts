@@ -2,6 +2,10 @@ import { Component, OnInit, Input, OnDestroy, Output, EventEmitter, OnChanges, S
 import { range } from 'src/app/helpers/number-helpers';
 import { Observable, Subscription } from 'rxjs';
 
+/**
+ * Idea based on https://codesandbox.io/s/xjk3xqnprw 
+ */
+
 @Component({
   selector: 'app-6-sided-dice',
   templateUrl: './6-sided-dice.component.html',

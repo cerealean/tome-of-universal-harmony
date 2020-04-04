@@ -2,6 +2,10 @@ import { Component, OnInit, ViewChild, ElementRef, Input, AfterViewInit, OnChang
 import { range } from 'src/app/helpers/number-helpers';
 import { Observable, Subscription } from 'rxjs';
 
+/**
+ * Idea based on https://codepen.io/vicentemundim/details/cenIh
+ */
+
 @Component({
   selector: 'app-20-sided-dice',
   templateUrl: './20-sided-dice.component.html',
