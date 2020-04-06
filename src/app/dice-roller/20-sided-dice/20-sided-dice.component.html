@@ -1,6 +1,6 @@
-<section class="dice-wrapper">
-    <div class="content">
-        <div class="die" *ngFor="let dieNum of getRange(numberOfDice)" (click)="rollDice($event.target.parentElement)">
+<!-- <section class="dice-wrapper">
+    <div class="content"> -->
+        <div class="die" (click)="rollDie()" #die>
           <figure class="face face-1"></figure>
           <figure class="face face-2"></figure>
           <figure class="face face-3"></figure>
@@ -22,5 +22,5 @@
           <figure class="face face-19"></figure>
           <figure class="face face-20"></figure>
         </div>
-      </div>
-</section>
+      <!-- </div>
+</section> -->

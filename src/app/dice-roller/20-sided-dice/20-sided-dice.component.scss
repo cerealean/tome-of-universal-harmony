@@ -1,11 +1,11 @@
 $containerWidth: 200px;
 $containerHeight: $containerWidth;
 
-$faceWidth:  $containerWidth*0.5;
-$faceHeight: $faceWidth*0.86;
+$faceWidth: $containerWidth * 0.5;
+$faceHeight: $faceWidth * 0.86;
 
 $transitionDuration: 0.5s;
-$animationDuration:  3s;
+$animationDuration: 3s;
 
 $angle: 53deg;
 $ringAngle: -11deg;
@@ -14,28 +14,110 @@ $opacity: 0.75;
 $color: rgba(30, 180, 20, $opacity);
 
 $rotateX: -$angle;
-$translateZ: $faceWidth*0.335;
-$translateY: -$faceHeight*0.15;
-$translateRingZ: $faceWidth*0.75;
-$translateRingY: $faceHeight*0.78 + $translateY;
+$translateZ: $faceWidth * 0.335;
+$translateY: -$faceHeight * 0.15;
+$translateRingZ: $faceWidth * 0.75;
+$translateRingY: $faceHeight * 0.78 + $translateY;
 $translateLowerZ: $translateZ;
-$translateLowerY: $faceHeight*0.78 + $translateRingY;
+$translateLowerY: $faceHeight * 0.78 + $translateRingY;
 
 @keyframes roll {
-  10% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) }
-  30% { transform: rotateX(120deg) rotateY(240deg) rotateZ(0deg) translateX(40px) translateY(40px) }
-  50% { transform: rotateX(240deg) rotateY(480deg) rotateZ(0deg) translateX(-40px) translateY(-40px) }
-  70% { transform: rotateX(360deg) rotateY(720deg) rotateZ(0deg) }
-  90% { transform: rotateX(480deg) rotateY(960deg) rotateZ(0deg) }
+  10% {
+    transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  }
+  30% {
+    transform: rotateX(120deg) rotateY(240deg) rotateZ(0deg);
+  }
+  50% {
+    transform: rotateX(240deg) rotateY(480deg) rotateZ(0deg);
+  }
+  70% {
+    transform: rotateX(360deg) rotateY(720deg) rotateZ(0deg);
+  }
+  90% {
+    transform: rotateX(480deg) rotateY(960deg) rotateZ(0deg);
+  }
 }
 
-.content {
-  margin: auto auto;
-  position: grid;
-  width: $containerWidth;
-  height: $containerHeight;
-  perspective: 1500px;
+@keyframes rollRotate {
+  0% {
+    transform: translate3d(-200px, -50px, -400px);
+  }
+  12% {
+    transform: translate3d(0px, 0, -100px);
+  }
+  25% {
+    transform: translate3d(200px, -50px, -400px);
+  }
+  37% {
+    transform: translate3d(0px, -100px, -800px);
+  }
+  50% {
+    transform: translate3d(-200px, -50px, -400px);
+  }
+  62% {
+    transform: translate3d(0px, 0, -100px);
+  }
+  75% {
+    transform: translate3d(200px, -50px, -400px);
+  }
+  87% {
+    transform: translate3d(0px, -100px, -800px);
+  }
+  100% {
+    transform: translate3d(-200px, -50px, -400px);
+  }
 }
+
+@keyframes spin {
+  0% {
+    transform: translateZ(-100px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  }
+  16% {
+    transform: translateZ(-100px) rotateX(180deg) rotateY(180deg) rotateZ(0deg);
+  }
+  33% {
+    transform: translateZ(-100px) rotateX(360deg) rotateY(90deg) rotateZ(180deg);
+  }
+  50% {
+    transform: translateZ(-100px) rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+  }
+  66% {
+    transform: translateZ(-100px) rotateX(180deg) rotateY(360deg) rotateZ(270deg);
+  }
+  83% {
+    transform: translateZ(-100px) rotateX(270deg) rotateY(180deg) rotateZ(180deg);
+  }
+  100% {
+    transform: translateZ(-100px) rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+  }
+}
+
+@keyframes move-origin {
+  0% {
+    perspective-origin: 0% 0%;
+  }
+  25% {
+    perspective-origin: 100% 0%;
+  }
+  50% {
+    perspective-origin: 300% 0%;
+  }
+  75% {
+    perspective-origin: 0% 300%;
+  }
+  100% {
+    perspective-origin: 0% 0%;
+  }
+}
+
+// .content {
+//   margin: auto auto;
+//   position: grid;
+//   width: $containerWidth;
+//   height: $containerHeight;
+//   perspective: 1500px;
+// }
 
 .die {
   grid-column: 1;
@@ -45,97 +127,129 @@ $translateLowerY: $faceHeight*0.78 + $translateRingY;
   transform-style: preserve-3d;
   transition: transform $transitionDuration ease-out;
   cursor: pointer;
-  
+  transform-origin: center center center !important;
+
   transform: rotateX($rotateX);
-  
+
   &.rolling {
-    animation: roll $animationDuration linear;
+    animation: roll $animationDuration infinite linear;
+    transform-origin: center center center;
   }
-  
+
   @for $i from 1 through 5 {
     &[data-face="#{$i}"] {
       $angleMultiplier: $i - 1;
       transform: rotateX(-$angle) rotateY($sideAngle * $angleMultiplier);
+      transform-origin: center center center;
     }
   }
-  
+
   @for $i from 16 through 20 {
     &[data-face="#{$i}"] {
       $angleMultiplier: $i - 15;
+
       transform: rotateX(-$angle + 180deg) rotateY(-$sideAngle * $angleMultiplier);
+      transform-origin: center center center;
     }
   }
-  
+
   @for $i from 6 through 10 {
     &[data-face="#{$i}"] {
       $angleMultiplier: $i - 6;
+
       transform: rotateX(-$ringAngle) rotateZ(180deg) rotateY($sideAngle * $angleMultiplier);
+      transform-origin: center center center;
     }
   }
-  
+
   @for $i from 11 through 15 {
     &[data-face="#{$i}"] {
       $angleMultiplier: $i - 8;
+
       transform: rotateX(-$ringAngle) rotateY(-$sideAngle * $angleMultiplier - $sideAngle/2);
+      transform-origin: center center center;
     }
   }
-  
+
   .face {
-    $horizontalMargin: -$faceWidth*0.5;
-    
+    $horizontalMargin: -$faceWidth * 0.5;
+
     position: absolute;
     left: 50%;
     top: 0;
     margin: 0 $horizontalMargin;
-    border-left: $faceWidth*0.5 solid transparent;
-    border-right: $faceWidth*0.5 solid transparent;
+    border-left: $faceWidth * 0.5 solid transparent;
+    border-right: $faceWidth * 0.5 solid transparent;
     border-bottom: $faceHeight solid $color;
     width: 0px;
     height: 0px;
     transform-style: preserve-3d;
+
     backface-visibility: hidden;
-    
+
     counter-increment: steps 1;
-  
+
     &:before {
       content: counter(steps);
       position: absolute;
-      top: $faceHeight*0.25;
+      top: $faceHeight * 0.25;
       left: -$faceWidth;
       color: #fff;
       text-shadow: 1px 1px 3px #000;
-      font-size: $faceHeight*0.5;
+      font-size: $faceHeight * 0.5;
       text-align: center;
-      line-height: $faceHeight*0.9;
-      width: $faceWidth*2;
+      line-height: $faceHeight * 0.9;
+      width: $faceWidth * 2;
       height: $faceHeight;
     }
-    
+
     @for $i from 1 through 5 {
       &:nth-child(#{$i}) {
         $angleMultiplier: $i - 1;
-        transform: rotateY(-$sideAngle * $angleMultiplier) translateZ($translateZ) translateY($translateY) rotateX($angle);
+
+        transform: rotateY(-$sideAngle * $angleMultiplier)
+          translateZ($translateZ)
+          translateY($translateY)
+          rotateX($angle);
+        transform-origin: center center center;
       }
     }
-      
+
     @for $i from 16 through 20 {
       &:nth-child(#{$i}) {
         $angleMultiplier: $i - 18;
-        transform: rotateY($sideAngle * $angleMultiplier + $sideAngle/2) translateZ($translateLowerZ) translateY($translateLowerY) rotateZ(180deg) rotateX($angle);
+
+        transform: rotateY($sideAngle * $angleMultiplier + $sideAngle/2)
+          translateZ($translateLowerZ)
+          translateY($translateLowerY)
+          rotateZ(180deg)
+          rotateX($angle);
+        transform-origin: center center center;
       }
     }
-      
+
     @for $i from 6 through 10 {
       &:nth-child(#{$i}) {
         $angleMultiplier: $i - 11;
-        transform: rotateY(-$sideAngle * $angleMultiplier) translateZ($translateRingZ) translateY($translateRingY) rotateZ(180deg) rotateX($ringAngle);
+
+        transform: rotateY(-$sideAngle * $angleMultiplier)
+          translateZ($translateRingZ)
+          translateY($translateRingY)
+          rotateZ(180deg)
+          rotateX($ringAngle);
+        transform-origin: center center center;
       }
     }
-      
+
     @for $i from 11 through 15 {
       &:nth-child(#{$i}) {
         $angleMultiplier: $i - 8;
-        transform: rotateY($sideAngle * $angleMultiplier + $sideAngle/2) translateZ($translateRingZ) translateY($translateRingY) rotateX($ringAngle);
+
+        transform: rotateY($sideAngle * $angleMultiplier + $sideAngle/2)
+          translateZ($translateRingZ)
+          translateY($translateRingY)
+          rotateX($ringAngle);
+        transform-origin: center center center;
       }
     }
   }
@@ -149,7 +263,7 @@ ul {
   list-style: none;
   margin: 0;
   padding: 0;
-  
+
   > li {
     display: inline-block;
     margin: 10px 10px;
@@ -168,15 +282,15 @@ a {
   border: 1px solid #dcdcdc;
   border-radius: 4px;
   background-color: #999;
-      
+
   &.active {
     background-color: #333;
   }
-      
+
   &:hover {
     background-color: #666;
   }
-    
+
   &.randomize {
     width: auto;
     margin: 20px 10px;
