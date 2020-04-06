@@ -45,6 +45,8 @@ $translateLowerY: $faceHeight*0.78 + $translateRingY;
   transform-style: preserve-3d;
   transition: transform $transitionDuration linear;
   cursor: pointer;
+  transform-origin: center center;
+  perspective-origin: center center;
   
   transform: rotateX($rotateX);
   
