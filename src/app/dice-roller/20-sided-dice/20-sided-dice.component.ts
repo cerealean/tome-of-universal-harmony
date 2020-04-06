@@ -15,15 +15,13 @@ export class TwentySidedDiceComponent implements OnInit, AfterViewInit, OnChange
 
   @ViewChild('die') $die: ElementRef<HTMLDivElement>;
 
-  @Input() numberOfDice: number;
   @Input() rollClicked: Observable<boolean>;
 
   private rollClicked$: Subscription;
-
   private initialSide = 1;
   private animationDuration = 3000;
-
   private diceElements: HTMLDivElement[] = [];
+  private timeoutId: any;
 
   ngOnInit() {
     this.rollClicked$ = this.rollClicked.subscribe(() => {
@@ -59,11 +57,11 @@ export class TwentySidedDiceComponent implements OnInit, AfterViewInit, OnChange
 
   rollDice(dieElement: HTMLDivElement) {
     dieElement.classList.add('rolling');
-
-    setTimeout(() => {
-      dieElement.classList.remove('rolling');
-
+    
+    this.timeoutId = setTimeout(() => {
       this.rollTo(dieElement, this.getRandomIntInclusive(1, 20));
+      dieElement.classList.remove('rolling');
+      this.timeoutId = null;
     }, this.animationDuration);
   }
 
