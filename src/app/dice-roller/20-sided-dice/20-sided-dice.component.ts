@@ -16,6 +16,7 @@ export class TwentySidedDiceComponent implements OnInit, AfterViewInit, OnChange
   @ViewChild('die') $die: ElementRef<HTMLDivElement>;
 
   @Input() rollClicked: Observable<boolean>;
+  @Input() numberOfDice: number;
 
   private rollClicked$: Subscription;
   private initialSide = 1;
