@@ -2,6 +2,38 @@ import { Component, OnInit, ComponentFactoryResolver, ViewChild, ViewContainerRe
 import { Subject } from 'rxjs';
 import { TwentySidedDiceComponent } from './20-sided-dice/20-sided-dice.component';
 
+class DiceInfo {
+  get left() {
+    return Number(this.nativeElement.style.left.replace('px', ''));
+  }
+  set left(value: number) {
+    this.nativeElement.style.left = String(value) + 'px';
+  }
+  get top() {
+    return Number(this.nativeElement.style.top.replace('px', ''));
+  }
+  set top(value: number) {
+    this.nativeElement.style.top = String(value) + 'px';
+  }
+  get height() {
+    return Number(this.nativeElement.clientHeight);
+  }
+  get width() {
+    return Number(this.nativeElement.clientWidth);
+  }
+  get parent() {
+    return this.nativeElement.parentElement;
+  }
+  get styles() {
+    return this.nativeElement.style;
+  }
+
+  get nativeElement(): HTMLDivElement {
+    return this.element.location.nativeElement;
+  }
+  constructor(public readonly element: ComponentRef<TwentySidedDiceComponent>) { }
+}
+
 @Component({
   selector: 'app-dice-roller',
   templateUrl: './dice-roller.component.html',
@@ -9,7 +41,8 @@ import { TwentySidedDiceComponent } from './20-sided-dice/20-sided-dice.componen
 })
 export class DiceRollerComponent implements OnInit {
   public rollClicked$: Subject<boolean>;
-  public addedDice: ComponentRef<TwentySidedDiceComponent>[] = [];
+  public addedDice: DiceInfo[] = [];
+  public loading = false;
 
   @ViewChild('diceWrapper', { read: ViewContainerRef }) diceWrapper: ViewContainerRef;
 
@@ -20,21 +53,24 @@ export class DiceRollerComponent implements OnInit {
   }
 
   addDie(sides: number) {
-    switch (sides) {
-      case 20:
-        const newDie = this.componentFactoryResolver.resolveComponentFactory(TwentySidedDiceComponent);
-        const reference = this.diceWrapper.createComponent(newDie);
-        reference.instance.rollClicked = this.rollClicked$;
-        const rawr = reference.location.nativeElement as HTMLDivElement;
-        const parent = rawr.parentElement;
-        parent.style.position = 'relative';
-        rawr.style.position = 'absolute';
-        const top = (this.calculateDicePositionWithinContainer(parent.clientHeight)) + 'px';
-        rawr.style.top = top;
-        rawr.style.left = this.calculateDicePositionWithinContainer(parent.clientWidth) + 'px';
-        console.log(top);
-        this.addedDice.push(reference);
+    this.loading = true;
+    let di: DiceInfo;
+    try {
+      switch (sides) {
+        case 20:
+          const newDie = this.componentFactoryResolver.resolveComponentFactory(TwentySidedDiceComponent);
+          const reference = this.diceWrapper.createComponent(newDie);
+          reference.instance.rollClicked = this.rollClicked$;
+          di = new DiceInfo(reference);
+          this.placeDie(di);
+          this.addedDice.push(di);
+      }
+    } catch {
+      this.loading = false;
+      di.element.destroy();
+      alert('Dice tray is full :(');
     }
+    this.loading = false;
   }
 
   afterRoll(total: number) {
@@ -42,11 +78,46 @@ export class DiceRollerComponent implements OnInit {
   }
 
   rollDie() {
+    if (this.loading) {
+      return;
+    }
     this.rollClicked$.next(true);
   }
 
-  private calculateDicePositionWithinContainer(max: number) {
-    const num = this.getRandomIntInclusive(0, max) - 200;
+  private placeDie(di: DiceInfo) {
+    di.styles.position = 'absolute';
+    console.group('Die number ' + (this.addedDice.length + 1));
+    this.calculatePosition(di);
+    // di.top = position.top;
+    // di.left = position.left;
+    console.groupEnd();
+  }
+
+  private calculatePosition(di: DiceInfo, depth: number = 0) {
+    console.log(depth);
+    if (depth >= 1000) {
+      throw new Error('Maximum depth exceeded');
+    }
+    di.top = this.randomWithMin0(di.parent.clientHeight);
+    di.left = this.randomWithMin0(di.parent.clientWidth);
+    const rect1 = di.nativeElement.getBoundingClientRect();
+    if (this.addedDice.some(this.doesOverlapWithAnother(rect1))) {
+      this.calculatePosition(di, depth + 1);
+    }
+  }
+
+  private doesOverlapWithAnother(rect1: DOMRect): (value: DiceInfo, index: number, array: DiceInfo[]) => boolean {
+    return di2 => {
+      const rect2 = di2.nativeElement.getBoundingClientRect();
+      return !(rect1.right < rect2.left ||
+        rect1.left > rect2.right ||
+        rect1.bottom < rect2.top ||
+        rect1.top > rect2.bottom);
+    };
+  }
+
+  private randomWithMin0(max: number) {
+    const num = this.getRandomIntInclusive(0, max);
 
     return num > 0 ? num : 0;
   }

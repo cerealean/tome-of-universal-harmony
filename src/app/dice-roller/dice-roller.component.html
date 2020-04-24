@@ -1,17 +1,17 @@
 <div class="box">
-    <div class="box is-primary">
+    <div class="box is-primary" [class.is-loading]="loading">
         <h1 class="title">Add Dice</h1>
         <app-20-sided-dice [initialSide]="20" title="D20" (click)="addDie(20)"></app-20-sided-dice>
     </div>
 
     <div class="field is-grouped">
         <div class="control">
-            <button class="button is-link" (click)="rollDie()">Roll</button>
+            <button class="button is-link" (click)="rollDie()" [class.is-loading]="loading">Roll</button>
         </div>
     </div>
     <hr />
 
-    <section class="dice-wrapper">
+    <section class="dice-wrapper" [class.is-loading]="loading">
         <ng-template #diceWrapper></ng-template>
     </section>
 </div>
