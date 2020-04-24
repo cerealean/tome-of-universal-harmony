@@ -1,15 +1,7 @@
 <div class="box">
-    <div class="field">
-        <label class="label">Number of Dice</label>
-        <div class="control">
-            <input type="number" class="input is-info" min="1" [(ngModel)]="numberOfDice" />
-        </div>
-    </div>
-    <div class="field">
-        <label class="label">Number of Sides</label>
-        <div class="control">
-            <input type="number" class="input is-info" min="1" [(ngModel)]="numberOfSides" />
-        </div>
+    <div class="box is-primary">
+        <h1 class="title">Add Dice</h1>
+        <app-20-sided-dice [initialSide]="20" title="D20" (click)="addDie(20)"></app-20-sided-dice>
     </div>
 
     <div class="field is-grouped">
@@ -20,17 +12,6 @@
     <hr />
 
     <section class="dice-wrapper">
-        
-        <app-20-sided-dice [numberOfDice]="numberOfDice" [rollClicked]="rollClicked$"></app-20-sided-dice>
-
-        <!-- <app-dice-list [numberOfSides]="numberOfSides" [numberOfDice]="numberOfDice" [rollClicked]="rollClicked$" (afterRollEvent)="afterRoll($event)"></app-dice-list> -->
-        <!-- <div class="dice">
-            <ol class="die-list" *ngFor="let dieNumber of getRange(numberOfDice)"
-                [class.even-roll]="(dieNumber % 2) === 0" [class.odd-roll]="(dieNumber % 2) !== 0">
-                <li class="die-item" *ngFor="let dieItemNum of getRange(numberOfSides)" [attr.data-side]="dieItemNum">
-                    <span class="dot" *ngFor="let dotNum of getRange(dieItemNum)"></span>
-                </li>
-            </ol>
-        </div> -->
+        <ng-template #diceWrapper></ng-template>
     </section>
 </div>

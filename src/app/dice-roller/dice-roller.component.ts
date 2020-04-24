@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ComponentFactoryResolver, ViewChild, ViewContainerRef, ComponentRef } from '@angular/core';
 import { Subject } from 'rxjs';
+import { TwentySidedDiceComponent } from './20-sided-dice/20-sided-dice.component';
 
 @Component({
   selector: 'app-dice-roller',
@@ -7,20 +8,25 @@ import { Subject } from 'rxjs';
   styleUrls: ['./dice-roller.component.scss']
 })
 export class DiceRollerComponent implements OnInit {
-  diceRolls = [];
-  numberOfSides = 6;
-  numberOfDice = 2;
-
   public rollClicked$: Subject<boolean>;
+  public addedDice: ComponentRef<TwentySidedDiceComponent>[] = [];
 
-  constructor() { }
+  @ViewChild('diceWrapper', { read: ViewContainerRef }) diceWrapper: ViewContainerRef;
+
+  constructor(private readonly componentFactoryResolver: ComponentFactoryResolver) { }
 
   ngOnInit() {
     this.rollClicked$ = new Subject<boolean>();
   }
 
-  getRange(num: number): number[] {
-    return Array.from(Array(num).keys()).map(n => n + 1);
+  addDie(sides: number) {
+    switch (sides) {
+      case 20:
+        const newDie = this.componentFactoryResolver.resolveComponentFactory(TwentySidedDiceComponent);
+        const reference = this.diceWrapper.createComponent(newDie);
+        reference.instance.rollClicked = this.rollClicked$;
+        this.addedDice.push(reference);
+    }
   }
 
   afterRoll(total: number) {
@@ -30,5 +36,4 @@ export class DiceRollerComponent implements OnInit {
   rollDie() {
     this.rollClicked$.next(true);
   }
-
 }
